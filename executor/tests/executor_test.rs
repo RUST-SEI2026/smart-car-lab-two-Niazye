@@ -320,3 +320,33 @@ mod fast_move_tests {
     }
 }
 
+mod fast_turn_tests {
+    use super::*;
+
+    #[test]
+    fn should_return_x_plus_1_facing_n_given_command_is_fl_and_facing_is_e() {
+        // given
+        let original_pose = Pose::new(0, 0, 'E');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("L");
+        // then
+        let expected_pose = Pose::new(1, 0, 'N');
+        assert_eq!(expected_pose, executor.query());
+    }
+
+    #[test]
+    fn should_return_y_minus_1_facing_e_given_command_is_fr_and_facing_is_s() {
+        // given
+        let original_pose = Pose::new(0, 0, 'S');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("R");
+        // then
+        let expected_pose = Pose::new(1, -1, 'W');
+        assert_eq!(expected_pose, executor.query());
+    }
+}
+
