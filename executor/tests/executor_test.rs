@@ -264,3 +264,59 @@ mod backward_turn_tests {
     }
 }
 
+mod fast_move_tests {
+    use super::*;
+
+    #[test]
+    fn should_return_x_plus_2_given_command_is_fm_and_facing_is_e() {
+        // given
+        let original_pose = Pose::new(0, 0, 'E');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("M");
+        // then
+        let expected_pose = Pose::new(2, 0, 'E');
+        assert_eq!(expected_pose, executor.query());
+    }
+
+    #[test]
+    fn should_return_y_minus_2_given_command_is_fm_and_facing_is_s() {
+        // given
+        let original_pose = Pose::new(0, 0, 'S');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("M");
+        // then
+        let expected_pose = Pose::new(0, -2, 'S');
+        assert_eq!(expected_pose, executor.query());
+    }
+
+    #[test]
+    fn should_return_x_minus_2_given_command_is_fm_and_facing_is_w() {
+        // given
+        let original_pose = Pose::new(0, 0, 'W');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("M");
+        // then
+        let expected_pose = Pose::new(-2, 0, 'W');
+        assert_eq!(expected_pose, executor.query());
+    }
+
+    #[test]
+    fn should_return_y_plus_2_given_command_is_fm_and_facing_is_n() {
+        // given
+        let original_pose = Pose::new(0, 0, 'N');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("M");
+        // then
+        let expected_pose = Pose::new(0, 2, 'N');
+        assert_eq!(expected_pose, executor.query());
+    }
+}
+
