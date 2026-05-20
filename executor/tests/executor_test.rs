@@ -232,6 +232,20 @@ mod backward_move_tests {
         let expected_pose = Pose::new(0, -1, 'N');
         assert_eq!(expected_pose, executor.query());
     }
+
+    #[test]
+    fn should_return_x_plus_1_given_command_is_bbm_and_facing_is_e() {
+        // given
+        let original_pose = Pose::new(0, 0, 'E');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("B");
+        executor.execute("B");
+        executor.execute("M");
+        // then
+        let expected_pose = Pose::new(1, 0, 'E');
+        assert_eq!(expected_pose, executor.query());
+    }
 }
 
 mod backward_turn_tests {
@@ -318,6 +332,20 @@ mod fast_move_tests {
         let expected_pose = Pose::new(0, 2, 'N');
         assert_eq!(expected_pose, executor.query());
     }
+
+    #[test]
+    fn should_return_y_plus_1_given_command_is_ffm_and_facing_is_n() {
+        // given
+        let original_pose = Pose::new(0, 0, 'N');
+        let mut executor = Executor::with_pose(original_pose);
+        // when
+        executor.execute("F");
+        executor.execute("F");
+        executor.execute("M");
+        // then
+        let expected_pose = Pose::new(0, 1, 'N');
+        assert_eq!(expected_pose, executor.query());
+    }
 }
 
 mod fast_turn_tests {
@@ -378,34 +406,6 @@ mod combined_backward_fast_tests {
         executor.execute("M");
         // then
         let expected_pose = Pose::new(0, 2, 'S');
-        assert_eq!(expected_pose, executor.query());
-    }
-
-    #[test]
-    fn should_return_x_plus_1_given_command_is_bbm_and_facing_is_e() {
-        // given
-        let original_pose = Pose::new(0, 0, 'E');
-        let mut executor = Executor::with_pose(original_pose);
-        // when
-        executor.execute("B");
-        executor.execute("B");
-        executor.execute("M");
-        // then
-        let expected_pose = Pose::new(1, 0, 'E');
-        assert_eq!(expected_pose, executor.query());
-    }
-
-    #[test]
-    fn should_return_y_plus_1_given_command_is_ffm_and_facing_is_n() {
-        // given
-        let original_pose = Pose::new(0, 0, 'N');
-        let mut executor = Executor::with_pose(original_pose);
-        // when
-        executor.execute("F");
-        executor.execute("F");
-        executor.execute("M");
-        // then
-        let expected_pose = Pose::new(0, 1, 'N');
         assert_eq!(expected_pose, executor.query());
     }
 
