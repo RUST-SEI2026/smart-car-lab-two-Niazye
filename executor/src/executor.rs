@@ -1,5 +1,5 @@
-use crate::state::State;
 use crate::pose::Pose;
+use crate::state::State;
 #[derive(Debug, Copy, Clone, PartialEq)]
 
 pub struct Executor {
@@ -25,30 +25,13 @@ impl Executor {
                 }
             }
             match cmd {
-                'M' => {
-                    if self.state.is_backward {
-                        self.pose.step(-1);
-                    } else {
-                        self.pose.step(1);
-                    }
-                }
-                'L' => {
-                    if self.state.is_backward {
-                        self.pose.turn_direction('R');
-                    } else {
-                        self.pose.turn_direction('L');
-                    }
-                }
-                'R' => {
-                    if self.state.is_backward {
-                        self.pose.turn_direction('L');
-                    } else {
-                        self.pose.turn_direction('R');
-                    }
-                }
                 'B' => self.state.toggle_backward(),
                 'F' => self.state.toggle_fast(),
                 _ => (),
+            }
+            let actions = self.state.assemble_single_action(cmd);
+            for action in actions {
+                action.execute_action(&mut self.pose);
             }
         }
     }

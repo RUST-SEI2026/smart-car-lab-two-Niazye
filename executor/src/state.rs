@@ -1,4 +1,4 @@
-use std::default;
+use crate::action::Action;
 
 #[derive(Default, Debug, Copy, Clone, PartialEq)]
 
@@ -12,5 +12,33 @@ impl State {
     }
     pub(crate) fn toggle_fast(&mut self) {
         self.is_fast = !self.is_fast;
+    }
+    pub(crate) fn assemble_single_action(&self, cmd: char) -> Vec<Action> {
+        match cmd {
+            'M' => vec![self.assemble_move_action()],
+            'L' | 'R' => vec![self.assemble_turn_action(cmd)],
+            _ => vec![],
+        }
+    }
+    pub(crate) fn assemble_multiple_actions(&self, cmd: &str) -> Vec<Action> {
+        let mut actions = Vec::new();
+        for c in cmd.chars() {
+            actions.extend(self.assemble_single_action(c));
+        }
+        actions
+    }
+    fn assemble_move_action(&self) -> Action {
+        if self.is_backward {
+            Action::Step(-1)
+        } else {
+            Action::Step(1)
+        }
+    }
+    fn assemble_turn_action(&self, direction: char) -> Action {
+        if self.is_backward {
+            Action::TurnDirection(if direction == 'L' { 'R' } else { 'L' })
+        } else {
+            Action::TurnDirection(direction)
+        }
     }
 }
