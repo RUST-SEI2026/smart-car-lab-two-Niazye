@@ -1,11 +1,10 @@
-use super::state::State;
+use crate::state::State;
 use crate::pose::Pose;
 #[derive(Debug, Copy, Clone, PartialEq)]
 
 pub struct Executor {
     pose: Pose,
     state: State,
-    is_fast: bool,
 }
 
 impl Executor {
@@ -13,13 +12,12 @@ impl Executor {
         Executor {
             pose,
             state: State::default(),
-            is_fast: false,
         }
     }
 
     pub fn execute(&mut self, cmds: &str) {
         for cmd in cmds.chars() {
-            if self.is_fast && (cmd == 'M' || cmd == 'L' || cmd == 'R') {
+            if self.state.is_fast && (cmd == 'M' || cmd == 'L' || cmd == 'R') {
                 if self.state.is_backward {
                     self.pose.step(-1);
                 } else {
@@ -49,7 +47,7 @@ impl Executor {
                     }
                 }
                 'B' => self.state.toggle_backward(),
-                'F' => self.is_fast = !self.is_fast,
+                'F' => self.state.toggle_fast(),
                 _ => (),
             }
         }
