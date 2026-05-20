@@ -16,10 +16,10 @@ impl State {
     pub(crate) fn assemble_single_action(&self, cmd: char) -> Vec<Action> {
         let mut actions = Vec::new();
         if self.is_fast {
-            actions.push(self.assemble_move_action());
+            actions.push(self.assemble_step_action());
         }
         match cmd {
-            'M' => actions.push(self.assemble_move_action()),
+            'M' => actions.push(self.assemble_step_action()),
             'L' | 'R' => actions.push(self.assemble_turn_action(cmd)),
             _ => (),
         }
@@ -32,7 +32,7 @@ impl State {
         }
         actions
     }
-    fn assemble_move_action(&self) -> Action {
+    fn assemble_step_action(&self) -> Action {
         if self.is_backward {
             Action::Step(-1)
         } else {

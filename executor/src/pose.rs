@@ -10,7 +10,7 @@ impl Pose {
     pub fn new(x: i32, y: i32, heading: char) -> Self {
         Pose { x, y, heading }
     }
-    pub fn step(&mut self, offset: i32) {
+    pub fn forward(&mut self, offset: i32) {
         match self.heading {
             'E' => self.x += offset,
             'S' => self.y -= offset,

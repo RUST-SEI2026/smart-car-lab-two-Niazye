@@ -9,7 +9,7 @@ impl Action {
     pub(crate) fn execute_action(&self, pose: &mut pose::Pose) {
         match self {
             Action::Step(offset) => {
-                pose.step(*offset);
+                pose.forward(*offset);
             }
             Action::TurnDirection(direction) => {
                 pose.turn_direction(*direction);
