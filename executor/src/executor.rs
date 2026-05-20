@@ -17,13 +17,6 @@ impl Executor {
 
     pub fn execute(&mut self, cmds: &str) {
         for cmd in cmds.chars() {
-            if self.state.is_fast && (cmd == 'M' || cmd == 'L' || cmd == 'R') {
-                if self.state.is_backward {
-                    self.pose.step(-1);
-                } else {
-                    self.pose.step(1);
-                }
-            }
             match cmd {
                 'B' => self.state.toggle_backward(),
                 'F' => self.state.toggle_fast(),

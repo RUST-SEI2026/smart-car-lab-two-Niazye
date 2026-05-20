@@ -14,11 +14,16 @@ impl State {
         self.is_fast = !self.is_fast;
     }
     pub(crate) fn assemble_single_action(&self, cmd: char) -> Vec<Action> {
-        match cmd {
-            'M' => vec![self.assemble_move_action()],
-            'L' | 'R' => vec![self.assemble_turn_action(cmd)],
-            _ => vec![],
+        let mut actions = Vec::new();
+        if self.is_fast {
+            actions.push(self.assemble_move_action());
         }
+        match cmd {
+            'M' => actions.push(self.assemble_move_action()),
+            'L' | 'R' => actions.push(self.assemble_turn_action(cmd)),
+            _ => (),
+        }
+        actions
     }
     pub(crate) fn assemble_multiple_actions(&self, cmd: &str) -> Vec<Action> {
         let mut actions = Vec::new();
