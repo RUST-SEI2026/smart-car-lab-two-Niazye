@@ -27,11 +27,12 @@ impl Executor {
             match cmd {
                 'B' => self.state.toggle_backward(),
                 'F' => self.state.toggle_fast(),
-                _ => (),
-            }
-            let actions = self.state.assemble_single_action(cmd);
-            for action in actions {
-                action.execute_action(&mut self.pose);
+                _ => {
+                    let actions = self.state.assemble_single_action(cmd);
+                    for action in actions {
+                        action.execute_action(&mut self.pose);
+                    }
+                }
             }
         }
     }
