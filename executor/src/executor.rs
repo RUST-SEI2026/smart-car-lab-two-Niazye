@@ -13,7 +13,7 @@ impl Executor {
     pub fn execute(&mut self, cmds: &str) {
         for cmd in cmds.chars() {
             match cmd {
-                'M' => self.pose.step(),
+                'M' => self.pose.step(1),
                 'L' | 'R' => self.pose.turn_direction(cmd),
                 _ => (),
             }
